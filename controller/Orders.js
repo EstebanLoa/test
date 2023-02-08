@@ -25,6 +25,17 @@ const getOrders = (req, res) => {
     res.status(200).json(ordr);
   });
 };
+
+const getIdOrders = (req, res) => {
+  Order.find(
+    { id_order: req.body.id_order},
+    (err, ordr) => {
+      err && res.status(500).send(err.message);
+      res.status(200).send(ordr);
+    }
+  );
+};
+
 const updateOrder = (req, res) => {
   Order.findOneAndUpdate(
     { id_order: req.body.id_order },
@@ -52,4 +63,4 @@ const deleteOrder = (req, res) => {
   });
 };
 
-module.exports = { createOrder, getOrders, updateOrder, deleteOrder };
+module.exports = { createOrder, getOrders, updateOrder, deleteOrder,getIdOrders };

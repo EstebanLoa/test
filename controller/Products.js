@@ -10,7 +10,6 @@ const createProduct = (req, res) => {
     dealerPrice: req.body.dealerPrice,
     subtotal: req.body.subtotal,
     total_iva: req.body.subtotal * 1.12,
-    unit_profit: req.body.subtotal - req.body.dealerPrice,
     total_profit: (req.body.subtotal - req.body.dealerPrice) * req.body.stock,
   });
 
@@ -27,11 +26,14 @@ const getProducts = (req, res) => {
   });
 };
 
-const getProductBrand= (req, res) => {
-  Product.find((err, produc) => {
-    err && res.status(500).send(err.message);
-    res.status(200).json(produc);
-  });
+const getIdProducts = (req, res) => {
+  Product.find(
+    { id_product: req.body.id_product },
+    (err, produc) => {
+      err && res.status(500).send(err.message);
+      res.status(200).send(produc);
+    }
+  );
 };
 
 const updateProduct = (req, res) => {
@@ -45,7 +47,6 @@ const updateProduct = (req, res) => {
       dealerPrice: req.body.dealerPrice,
       subtotal: req.body.subtotal,
       total_iva: req.body.subtotal * 1.12,
-      unit_profit: req.body.subtotal - req.body.dealerPrice,
       total_profit: (req.body.subtotal - req.body.dealerPrice) * req.body.stock,
     },
     (err, produc) => {
@@ -65,4 +66,4 @@ const deleteProduct = (req, res) => {
   );
 };
 
-module.exports = { createProduct, getProducts, updateProduct, deleteProduct };
+module.exports = { createProduct, getProducts, updateProduct, deleteProduct, getIdProducts };

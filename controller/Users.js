@@ -8,6 +8,7 @@ const createUser = (req, res) => {
     lastname_user: req.body.lastname_user,
     address: req.body.address,
     phone: req.body.phone,
+    password: req.body.password,
   });
   user.save((err, use) => {
     err && res.status(500).json(err.message);
@@ -21,6 +22,17 @@ const getUsers = (req, res) => {
     res.status(200).json(use);
   });
 };
+
+const getIdUsers = (req, res) => {
+  User.find(
+    { id_user: req.body.id_user },
+    (err, use) => {
+      err && res.status(500).send(err.message);
+      res.status(200).send(use);
+    }
+  );
+};
+
 const updateUser = (req, res) => {
   User.findOneAndUpdate(
     { id_user: req.body.id_user },
@@ -30,6 +42,7 @@ const updateUser = (req, res) => {
       lastname_user: req.body.lastname_user,
       address: req.body.address,
       phone: req.body.phone,
+      password: req.body.password,
     },
     (err, use) => {
       err && res.status(500).send(err.message);
@@ -45,4 +58,4 @@ const deleteUser = (req, res) => {
   });
 };
 
-module.exports = { createUser, getUsers, updateUser, deleteUser };
+module.exports = { createUser, getUsers, updateUser, deleteUser, getIdUsers };
